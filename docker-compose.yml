@@ -1,0 +1,19 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  systemimage:
+    build: .
+    image: ubuntu:18.04
+    container_name: webp_server
+    #restart: always
+    ports:
+      - ${PORT}
+    volumes:
+      - ./install:/var/www/install/
+      - ${FOLDER}:/var/www/application/
+    command: "tail -F /var/www/install/log.txt"
+    networks:
+        - dev
+    extra_hosts:
+      - "webpserver:host-gateway"
+networks:
+  dev:
